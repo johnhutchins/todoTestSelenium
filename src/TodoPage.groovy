@@ -104,12 +104,22 @@ class TodoPage {
 
     public Integer markItemAsComplete(String item){
         //add item
-        //mark as complete
-        //go to the complete list and make sure the length is 1
+        //mark as complet
+
         WebElement input = driver.findElement(By.cssSelector(INPUT))
         input.sendKeys(item)
         input.sendKeys(Keys.ENTER)
+        sleep(2000)
+        //mark as complete
+    //#root > div > section > ul > li:nth-child(1) > div > input
+       // Actions action = new Actions(driver)
+        WebElement we = driver.findElement(By.cssSelector("#root > div > section > ul > li:nth-child(1) > div > input"))
+        we.click()
 
+        driver.findElement(By.cssSelector(completedListLink)).click()
+        sleep(2000)
+        //go to completed list and make sure that there is one item
+        return driver.findElements(By.cssSelector(TODO_LIST_COMPLETED)).size()
 
     }
 
