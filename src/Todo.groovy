@@ -65,7 +65,7 @@ class Todo {
     public void clearCompletedItems(){
         sleep(5000);
         TodoPage todoPage = new TodoPage(ff)
-        sleep(5000)
-        assert todoPage.clearCompletedItems() == 13
+        //sleep(5000)
+        assert todoPage.clearCompletedItems() == 0
     }
 }

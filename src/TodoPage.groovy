@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.ui.ExpectedCondition
 import org.openqa.selenium.support.ui.WebDriverWait
+import org.openqa.selenium.support.ui.ExpectedConditions
 
 import java.awt.event.MouseEvent
 import java.lang.reflect.Array
@@ -75,38 +76,27 @@ class TodoPage {
         return second.size()
     }
 
-    public String clearCompletedItems(){
-        //Add new item
-        //complete the item
-        //go to the completed list, make sure the length is 1
-        //clear completed list
-        //return the number of li elements within the completed list
-//        String newItem = addTodoItem('newItem')
-//        return newItem;
+    public Integer clearCompletedItems(){
 
-        sleep(5000)
-        WebElement input = driver.findElement(By.xpath("//input[@class='new-todo']"));
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement input =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#root > div > header > input")))
 
         input.sendKeys("item");
         input.sendKeys(Keys.ENTER);
-        sleep(5000)
 
         WebElement todoListInput = driver.findElement(By.cssSelector("#root > div > section > ul > li:nth-child(1) > div > input"))
         todoListInput.click()
-        sleep(5000)
 
-        WebElement activeListLink = driver.findElement(By.cssSelector((completedListLink)))
+        WebElement activeListLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector((completedListLink))))
         activeListLink.click()
 
-        sleep(5000)
-        //.todo-list > .completed
-        WebElement completedItem = driver.findElement(By.cssSelector(".todo-list > .completed"))
+        WebElement completedItem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".todo-list > .completed")))
 
         //make sure that there is a completed item
         if(completedItem.getText() == "item"){
             driver.findElement(By.cssSelector("#root > div > section > footer > button")).click()
         }
-        sleep(5000)
+
         List<WebElement> todoListItems = driver.findElements(By.cssSelector(".todo-list > li"))
         return todoListItems.size()
     }
