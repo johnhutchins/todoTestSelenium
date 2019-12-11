@@ -48,12 +48,6 @@ class Todo {
         assert todoPage.addTodoItem('item') == 'item'
     }
 
-    @Test
-    public void markItemAsComplete(){
-        TodoPage todoPage = new TodoPage(ff)
-        sleep(5000)
-        assert todoPage.markItemAsComplete() == 1
-    }
 
     @Test
     public void deleteTodoItem(){
@@ -67,5 +61,12 @@ class Todo {
         TodoPage todoPage = new TodoPage(ff)
         //sleep(5000)
         assert todoPage.clearCompletedItems() == 0
+    }
+
+    @Test
+    public void markItemAsComplete(){
+        TodoPage todoPage = new TodoPage(ff)
+        sleep(5000)
+        assert todoPage.markItemAsComplete() == 1
     }
 }

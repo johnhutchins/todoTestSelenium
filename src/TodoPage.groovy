@@ -41,8 +41,9 @@ class TodoPage {
     }
 
     public String getPageHeader(){
-        String s = driver.findElement(By.cssSelector(HEADER_H1)).getText()
-        return s
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement s =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(HEADER_H1)))
+        return s.getText()
     }
 
     public String isPageTodoListPage(){
@@ -101,46 +102,15 @@ class TodoPage {
         return todoListItems.size()
     }
 
-    public Integer markItemAsComplete(){
-        //click the default input
-        //check the size of the completed list first....
-        sleep(3000)
-        driver.findElement(By.cssSelector(completedListLink)).click()
-        //get size of completed list
-        sleep(3000)
-        //System.out.println(driver.findElements(By.cssSelector(TODO_LIST_INPUTS)).size())
-        Integer initialCompletedSize = driver.findElements(By.cssSelector(TODO_LIST_INPUTS)).size()
+    public Integer markItemAsComplete(String item){
+        //add item
+        //mark as complete
+        //go to the complete list and make sure the length is 1
+        WebElement input = driver.findElement(By.cssSelector(INPUT))
+        input.sendKeys(item)
+        input.sendKeys(Keys.ENTER)
 
-        if(initialCompletedSize == 0){
-            //go back and click the default, then check
-            driver.findElement(By.cssSelector(allListLink)).click()
-            sleep(500)
 
-            WebElement defaultInput = driver.findElement(By.cssSelector(TODO_LIST_DEFAULT_INPUT))
-            sleep(1000)
-            defaultInput.click()
-
-            //go back to completed list.
-            driver.findElement(By.cssSelector(completedListLink)).click()
-            return driver.findElements(By.cssSelector(TODO_LIST_INPUTS)).size()
-        } else {
-            System.out.println('Initial size is not 0. Failure, exiting test.')
-            return -1500
-        }
-/*        sleep(1000)
-        WebElement defaultInput = driver.findElement(By.cssSelector(TODO_LIST_DEFAULT_INPUT))
-        sleep(1000)
-        defaultInput.click()
-        sleep(1000)
-
-        //now need to click on the completed link
-        driver.findElement(By.cssSelector(completedListLink)).click()
-        sleep(1000)
-
-        System.out.println(driver.findElement(By.cssSelector(TODO_LIST_COMPLETED)).getText())
-        if(driver.findElement(By.cssSelector(TODO_LIST_COMPLETED)).getText() == 'Use Redux'){
-            System.out.println('completed item')
-        }*/
     }
 
 
