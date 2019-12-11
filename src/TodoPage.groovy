@@ -55,13 +55,44 @@ class TodoPage {
         return driver.findElements(By.cssSelector(TODO_LIST_INPUTS)).size()
     }
 
-    public void deleteTodoItem(){
-        sleep(5000);
-        //OLD
+    public Integer deleteTodoItem(){
+        sleep(5000)
+        List<WebElement> fir = driver.findElements(By.cssSelector(".todo-list >li"))
+        //System.out.println(fir.size())
         Actions action = new Actions(driver)
         WebElement we = driver.findElement(By.cssSelector(ENTIRE_INPUT))
+        sleep(2000)
         action.moveToElement(we).build().perform()
+        sleep(2000)
         action.moveToElement(driver.findElement(By.cssSelector(DEFAULT_ITEM_DELETE))).click().build().perform()
+        //make sure the item is not in the list
+        sleep(2000)
+
+        List<WebElement> second = driver.findElements(By.cssSelector(".todo-list > li"))
+        sleep(2000)
+        System.out.println(second.size())
+        return second.size()
+    }
+
+    public Integer clearCompletedItems(){
+        //Add new item
+        //complete the item
+        //go to the completed list, make sure the length is 1
+        //clear completed list
+        //return the number of li elements within the completed list
+
+//        WebElement input = ff.findElement(By.xpath("//input[@class='new-todo']"));
+//
+//        input.sendKeys("item");
+//        input.sendKeys(Keys.ENTER);
+//
+//        List<WebElement> todoListInputs = ff.findElementsByXPath("//ul[@class='todo-list']//div[@class='view']//input");
+//        todoListInputs[0].click();
+//
+//        WebElement activeListLink = ff.findElement(By.xpath(("//footer/ul/li[2]/a")))
+//        activeListLink.click()
+//
+//        List<WebElement> listItems = ff.findElementsByXPath("//ul[@class='todo-list']//li")
     }
 
     public Integer markItemAsComplete(){
