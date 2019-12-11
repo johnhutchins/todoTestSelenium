@@ -45,7 +45,7 @@ class Todo {
     public void addTodoItem(){
         TodoPage todoPage = new TodoPage(ff)
         sleep(5000)
-        assert todoPage.addTodoItem() == 2
+        assert todoPage.addTodoItem('item') == 'item'
     }
 
     @Test
@@ -58,25 +58,14 @@ class Todo {
     @Test
     public void deleteTodoItem(){
         TodoPage todoPage = new TodoPage(ff)
-        todoPage.deleteTodoItem()
-        //assert todoPage.deleteTodoItem() == 1
+        assert todoPage.deleteTodoItem() == 0
     }
 
     @Test
     public void clearCompletedItems(){
         sleep(5000);
-        WebElement input = ff.findElement(By.xpath("//input[@class='new-todo']"));
-
-        input.sendKeys("item");
-        input.sendKeys(Keys.ENTER);
-
-        List<WebElement> todoListInputs = ff.findElementsByXPath("//ul[@class='todo-list']//div[@class='view']//input");
-        todoListInputs[0].click();
-
-        WebElement activeListLink = ff.findElement(By.xpath(("//footer/ul/li[2]/a")))
-        activeListLink.click()
-
-        List<WebElement> listItems = ff.findElementsByXPath("//ul[@class='todo-list']//li")
-        assert listItems.size() == 1
+        TodoPage todoPage = new TodoPage(ff)
+        sleep(5000)
+        assert todoPage.clearCompletedItems() == 13
     }
 }

@@ -48,11 +48,12 @@ class TodoPage {
         return BASE_URL
     }
 
-    public Integer addTodoItem(){
+    public String addTodoItem(String item){
         WebElement input = driver.findElement(By.cssSelector(INPUT))
-        input.sendKeys(todoItem)
+        input.sendKeys(item)
         input.sendKeys(Keys.ENTER)
-        return driver.findElements(By.cssSelector(TODO_LIST_INPUTS)).size()
+        sleep(5000)
+        return driver.findElements(By.cssSelector(TODO_LIST_INPUTS))[0].getText()
     }
 
     public Integer deleteTodoItem(){
@@ -74,25 +75,40 @@ class TodoPage {
         return second.size()
     }
 
-    public Integer clearCompletedItems(){
+    public String clearCompletedItems(){
         //Add new item
         //complete the item
         //go to the completed list, make sure the length is 1
         //clear completed list
         //return the number of li elements within the completed list
+//        String newItem = addTodoItem('newItem')
+//        return newItem;
 
-//        WebElement input = ff.findElement(By.xpath("//input[@class='new-todo']"));
-//
-//        input.sendKeys("item");
-//        input.sendKeys(Keys.ENTER);
-//
-//        List<WebElement> todoListInputs = ff.findElementsByXPath("//ul[@class='todo-list']//div[@class='view']//input");
-//        todoListInputs[0].click();
-//
-//        WebElement activeListLink = ff.findElement(By.xpath(("//footer/ul/li[2]/a")))
-//        activeListLink.click()
-//
-//        List<WebElement> listItems = ff.findElementsByXPath("//ul[@class='todo-list']//li")
+        sleep(5000)
+        WebElement input = driver.findElement(By.xpath("//input[@class='new-todo']"));
+
+        input.sendKeys("item");
+        input.sendKeys(Keys.ENTER);
+        sleep(5000)
+
+        WebElement todoListInput = driver.findElement(By.cssSelector("#root > div > section > ul > li:nth-child(1) > div > input"))
+        todoListInput.click()
+        sleep(5000)
+
+        WebElement activeListLink = driver.findElement(By.cssSelector((completedListLink)))
+        activeListLink.click()
+
+        sleep(5000)
+        //.todo-list > .completed
+        WebElement completedItem = driver.findElement(By.cssSelector(".todo-list > .completed"))
+
+        //make sure that there is a completed item
+        if(completedItem.getText() == "item"){
+            driver.findElement(By.cssSelector("#root > div > section > footer > button")).click()
+        }
+        sleep(5000)
+        List<WebElement> todoListItems = driver.findElements(By.cssSelector(".todo-list > li"))
+        return todoListItems.size()
     }
 
     public Integer markItemAsComplete(){
