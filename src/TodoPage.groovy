@@ -54,71 +54,48 @@ class TodoPage {
         WebElement input = driver.findElement(By.cssSelector(INPUT))
         input.sendKeys(item)
         input.sendKeys(Keys.ENTER)
-        sleep(5000)
+        //length should be 2, could return that instead of text?
         return driver.findElements(By.cssSelector(TODO_LIST_INPUTS))[0].getText()
     }
 
     public Integer deleteTodoItem(){
-        sleep(5000)
-        List<WebElement> fir = driver.findElements(By.cssSelector(".todo-list >li"))
-        //System.out.println(fir.size())
+        WebDriverWait wait = new WebDriverWait(driver, 5)
         Actions action = new Actions(driver)
-        WebElement we = driver.findElement(By.cssSelector(ENTIRE_INPUT))
-        sleep(2000)
+        WebElement we = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(ENTIRE_INPUT)))
         action.moveToElement(we).build().perform()
-        sleep(2000)
         action.moveToElement(driver.findElement(By.cssSelector(DEFAULT_ITEM_DELETE))).click().build().perform()
-        //make sure the item is not in the list
-        sleep(2000)
 
-        List<WebElement> second = driver.findElements(By.cssSelector(".todo-list > li"))
-        sleep(2000)
-        System.out.println(second.size())
+        List<WebElement> second = driver.findElements(By.cssSelector(TODO_LIST_INPUTS))
         return second.size()
     }
 
     public Integer clearCompletedItems(){
-
         WebDriverWait wait = new WebDriverWait(driver, 5);
         WebElement input =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#root > div > header > input")))
-
         input.sendKeys("item");
         input.sendKeys(Keys.ENTER);
-
         WebElement todoListInput = driver.findElement(By.cssSelector("#root > div > section > ul > li:nth-child(1) > div > input"))
         todoListInput.click()
-
         WebElement activeListLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector((completedListLink))))
         activeListLink.click()
-
         WebElement completedItem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".todo-list > .completed")))
-
         //make sure that there is a completed item
         if(completedItem.getText() == "item"){
             driver.findElement(By.cssSelector("#root > div > section > footer > button")).click()
         }
 
-        List<WebElement> todoListItems = driver.findElements(By.cssSelector(".todo-list > li"))
+        List<WebElement> todoListItems = driver.findElements(By.cssSelector(TODO_LIST_INPUTS))
         return todoListItems.size()
     }
 
     public Integer markItemAsComplete(String item){
-        //add item
-        //mark as complet
-
         WebElement input = driver.findElement(By.cssSelector(INPUT))
         input.sendKeys(item)
         input.sendKeys(Keys.ENTER)
-        sleep(2000)
-        //mark as complete
-    //#root > div > section > ul > li:nth-child(1) > div > input
-       // Actions action = new Actions(driver)
-        WebElement we = driver.findElement(By.cssSelector("#root > div > section > ul > li:nth-child(1) > div > input"))
-        we.click()
+
+        driver.findElement(By.cssSelector("#root > div > section > ul > li:nth-child(1) > div > input")).click()
 
         driver.findElement(By.cssSelector(completedListLink)).click()
-        sleep(2000)
-        //go to completed list and make sure that there is one item
         return driver.findElements(By.cssSelector(TODO_LIST_COMPLETED)).size()
 
     }
