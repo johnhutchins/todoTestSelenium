@@ -1,18 +1,10 @@
 import org.junit.After
 import org.junit.Before
-import org.junit.BeforeClass
-import org.junit.Test;
-import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.junit.Test
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.firefox.FirefoxDriver
 
 class Todo {
-
 
     //Watch https://vimeo.com/44133409
     //Refactor your code from Challenge #4 to follow the Best Practices discussed, (but in the order below)
