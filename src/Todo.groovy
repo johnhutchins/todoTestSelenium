@@ -37,14 +37,12 @@ class Todo {
     @Test
     public void getHomepageHeader(){
         TodoPage todoPage = new TodoPage(ff)
-        sleep(1000)
         assert todoPage.getPageHeader()== "todos"
     }
 
     @Test
     public void addTodoItem(){
         TodoPage todoPage = new TodoPage(ff)
-        sleep(5000)
         assert todoPage.addTodoItem('item') == 'item'
     }
 

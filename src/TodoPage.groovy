@@ -42,7 +42,7 @@ class TodoPage {
     }
 
     public String getPageHeader(){
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 5)
         WebElement s =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(HEADER_H1)))
         return s.getText()
     }
@@ -52,7 +52,8 @@ class TodoPage {
     }
 
     public String addTodoItem(String item){
-        WebElement input = driver.findElement(By.cssSelector(INPUT))
+        WebDriverWait wait = new WebDriverWait(driver, 5)
+        WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(INPUT)))
         input.sendKeys(item)
         input.sendKeys(Keys.ENTER)
         //length should be 2, could return that instead of text?
