@@ -32,6 +32,10 @@ class TodoPage {
     private static final String activeListLink = "#root > div > section > footer > ul > li:nth-child(2)"
     private static final String completedListLink = "#root > div > section > footer > ul > li:nth-child(3)"
 
+    private static final String clearCompletedButton = ".clear-completed"
+    private static final String completedItem = ".todo-list > .completed"
+    private static final String completeItemInput = "#root > div > section > ul > li:nth-child(1) > div > input"
+
     private static final String todoItem = 'Mow the Carpet'
 
     private final WebDriver driver
@@ -72,17 +76,18 @@ class TodoPage {
 
     public Integer clearCompletedItems(){
         WebDriverWait wait = new WebDriverWait(driver, 5)
-        WebElement input =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#root > div > header > input")))
+        WebElement input =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(INPUT)))
         input.sendKeys("item");
         input.sendKeys(Keys.ENTER);
-        WebElement todoListInput = driver.findElement(By.cssSelector("#root > div > section > ul > li:nth-child(1) > div > input"))
+        WebElement todoListInput = driver.findElement(By.cssSelector(completeItemInput))
         todoListInput.click()
         WebElement activeListLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector((completedListLink))))
         activeListLink.click()
-        WebElement completedItem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".todo-list > .completed")))
+        WebElement completedItem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(completedItem)))
         //make sure that there is a completed item
         if(completedItem.getText() == "item"){
-            driver.findElement(By.cssSelector("#root > div > section > footer > button")).click()
+            //clear-completed
+            driver.findElement(By.cssSelector(clearCompletedButton)).click()
         }
 
         List<WebElement> todoListItems = driver.findElements(By.cssSelector(TODO_LIST_INPUTS))
