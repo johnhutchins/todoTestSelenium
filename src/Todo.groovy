@@ -64,7 +64,6 @@ class Todo {
     @Test
     public void markItemAsComplete(){
         TodoPage todoPage = new TodoPage(ff)
-        sleep(5000)
         assert todoPage.markItemAsComplete('item') == 1
     }
 }

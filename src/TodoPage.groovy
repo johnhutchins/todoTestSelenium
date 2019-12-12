@@ -21,6 +21,7 @@ class TodoPage {
     private static final String TODO_LIST_DEFAULT_INPUT = ".todo-list > li input"
     private static final String DEFAULT_ITEM_DELETE = '.destroy'
     private static final String ENTIRE_INPUT = '#root > div > section > ul > li'
+    private static final String ADDED_ITEM_COMPLETE_CHECKBOX = "#root > div > section > ul > li:nth-child(1) > div > input"
 
     private static final String TODO_LIST_COMPLETED = ".todo-list > .completed"
     private static final String TODO_COUNT = ".todo-count"
@@ -64,13 +65,12 @@ class TodoPage {
         WebElement we = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(ENTIRE_INPUT)))
         action.moveToElement(we).build().perform()
         action.moveToElement(driver.findElement(By.cssSelector(DEFAULT_ITEM_DELETE))).click().build().perform()
-
         List<WebElement> second = driver.findElements(By.cssSelector(TODO_LIST_INPUTS))
         return second.size()
     }
 
     public Integer clearCompletedItems(){
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 5)
         WebElement input =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#root > div > header > input")))
         input.sendKeys("item");
         input.sendKeys(Keys.ENTER);
@@ -89,15 +89,14 @@ class TodoPage {
     }
 
     public Integer markItemAsComplete(String item){
-        WebElement input = driver.findElement(By.cssSelector(INPUT))
+        WebDriverWait wait = new WebDriverWait(driver, 5)
+        WebElement input = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(INPUT)))
         input.sendKeys(item)
         input.sendKeys(Keys.ENTER)
-
-        driver.findElement(By.cssSelector("#root > div > section > ul > li:nth-child(1) > div > input")).click()
-
+        WebElement itemAddedCheckBox = driver.findElement(By.cssSelector(ADDED_ITEM_COMPLETE_CHECKBOX))
+        itemAddedCheckBox.click()
         driver.findElement(By.cssSelector(completedListLink)).click()
         return driver.findElements(By.cssSelector(TODO_LIST_COMPLETED)).size()
-
     }
 
 
