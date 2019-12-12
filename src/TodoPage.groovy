@@ -16,28 +16,15 @@ class TodoPage {
     private static final String BASE_URL = 'https://react-redux-todomvc.stackblitz.io/'
     private static final String HEADER_H1 = "div > header > h1"
     private static final String INPUT = ".header > .new-todo"
-    private static final String TODO_LIST = "//ul[@class='todo-list']//div[@class='view']//label"
     private static final String TODO_LIST_INPUTS = ".todo-list > li"
-    private static final String TODO_LIST_DEFAULT_INPUT = ".todo-list > li input"
     private static final String DEFAULT_ITEM_DELETE = '.destroy'
     private static final String ENTIRE_INPUT = '#root > div > section > ul > li'
     private static final String ADDED_ITEM_COMPLETE_CHECKBOX = "#root > div > section > ul > li:nth-child(1) > div > input"
-
     private static final String TODO_LIST_COMPLETED = ".todo-list > .completed"
-    private static final String TODO_COUNT = ".todo-count"
-
-    private static final String LIST_ITEM = "//ul[@class='todo-list']//li"
-    private static final String firstItemToDestroy = "//button"
-    private static final String allListLink = "#root > div > section > footer > ul > li:nth-child(1)"
-    private static final String activeListLink = "#root > div > section > footer > ul > li:nth-child(2)"
     private static final String completedListLink = "#root > div > section > footer > ul > li:nth-child(3)"
-
     private static final String clearCompletedButton = ".clear-completed"
     private static final String completedItem = ".todo-list > .completed"
     private static final String completeItemInput = "#root > div > section > ul > li:nth-child(1) > div > input"
-
-    private static final String todoItem = 'Mow the Carpet'
-
     private final WebDriver driver
 
     public TodoPage(WebDriver driver){
@@ -77,12 +64,12 @@ class TodoPage {
     public Integer clearCompletedItems(){
         WebDriverWait wait = new WebDriverWait(driver, 5)
         WebElement input =  wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(INPUT)))
-        input.sendKeys("item");
-        input.sendKeys(Keys.ENTER);
+        input.sendKeys("item")
+        input.sendKeys(Keys.ENTER)
         WebElement todoListInput = driver.findElement(By.cssSelector(completeItemInput))
         todoListInput.click()
-        WebElement activeListLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector((completedListLink))))
-        activeListLink.click()
+        WebElement completedListLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector((completedListLink))))
+        completedListLink.click()
         WebElement completedItem = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(completedItem)))
         //make sure that there is a completed item
         if(completedItem.getText() == "item"){
@@ -104,7 +91,5 @@ class TodoPage {
         driver.findElement(By.cssSelector(completedListLink)).click()
         return driver.findElements(By.cssSelector(TODO_LIST_COMPLETED)).size()
     }
-
-
 }
 
